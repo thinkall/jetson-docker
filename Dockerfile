@@ -1,3 +1,5 @@
+# syntax=docker/dockerfile:experimental
+
 FROM ubuntu:16.04
 
 MAINTAINER Li JIANG <li.jiang@orange.com>
