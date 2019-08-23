@@ -1,7 +1,12 @@
 # thinkall/edge-computing:tfcpu1.11-py3.5
 # build from ubuntu, python 3.5, tensorflow-cpu 1.11
 
-from arm64v8/ubuntu:16.04
+# build from ubuntu, python 3.6, tensorflow-cpu 1.9
+
+#from arm64v8/ubuntu:16.04
+#16.04 pip3 install raise errors
+
+from arm64v8/ubuntu:18.04
 
 MAINTAINER Li JIANG <bnujli@gmail.com>
 
@@ -23,9 +28,10 @@ RUN HDF5_DIR=/usr/lib/aarch64-linux-gnu/hdf5/serial/  \
     requests six wrapt flask json5 Pillow matplotlib celery redis
 
 # Install tensorflow
-RUN pip3 install --no-cache-dir https://raw.githubusercontent.com/dujiangsu/tensorflow-1.11.0-cp35-cp35m-linux_aarch64/master/tensorflow-1.11.0-cp35-cp35m-linux_aarch64.whl
+#RUN pip3 install --no-cache-dir https://raw.githubusercontent.com/dujiangsu/tensorflow-1.11.0-cp35-cp35m-linux_aarch64/master/tensorflow-1.11.0-cp35-cp35m-linux_aarch64.whl
 
-WORKDIR /workspace
+RUN pip3 install --no-cache-dir https://raw.githubusercontent.com/markjay4k/Tensorflow-1.9rc0-py36-aarch64/master/tensorflow-1.9.0rc0-cp36-cp36m-linux_aarch64.whl
+
 
 WORKDIR /workspace/
 
