@@ -1,0 +1,20 @@
+# docker build -t orangelabschina/pose_estimation_arm64:v1.0 .
+## based on orangelabschina/image_caption_arm64:v1.1tfcpu container,
+## installed all libs and commit it to a new image,
+## i.e., orangelabschina/pose_estimation_arm64:v0
+## from this new image, add files and change entrypoint
+
+FROM orangelabschina/pose_estimation_arm64:v0
+
+RUN rm -rf /var/lib/apt/lists/* && rm -rf /tmp/*.tar.gz && \
+    apt-get clean && rm -rf /tmp/* /var/tmp* /var/lib/apt/lists/* && \
+    rm -f /etc/ssh/ssh_host_* && rm -rf /usr/share/man?? /usr/share/man/??_* && \
+    rm -rf /workplace && mkdir -p /workplace/tf-openpose
+
+COPY . /workplace/tf-openpose/
+
+RUN cd /workplace/tf-openpose/ && \
+cd tf_pose/pafprocess && swig -python -c++ pafprocess.i && python3 setup.py build_ext --inplace
+
+WORKDIR /workplace/tf-openpose/
+ENTRYPOINT ["python3", "run_stream.py", "--model=mobilenet_thin", "--resize=432x368", "--image=./images/p1.jpg"]
